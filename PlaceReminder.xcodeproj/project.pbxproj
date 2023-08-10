@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F0BD727D2A85315C00C02B94 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BD727C2A85315C00C02B94 /* HomeViewController.m */; };
+		F0BD72802A85323500C02B94 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BD727F2A85323500C02B94 /* MapViewController.m */; };
 		F0BDAFBF2A82896300602815 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BDAFBE2A82896300602815 /* AppDelegate.m */; };
 		F0BDAFC22A82896300602815 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BDAFC12A82896300602815 /* SceneDelegate.m */; };
 		F0BDAFC52A82896300602815 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BDAFC42A82896300602815 /* ViewController.m */; };
@@ -37,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F0BD727B2A85315C00C02B94 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		F0BD727C2A85315C00C02B94 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		F0BD727E2A85323500C02B94 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		F0BD727F2A85323500C02B94 /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		F0BDAFBA2A82896300602815 /* PlaceReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlaceReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0BDAFBD2A82896300602815 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F0BDAFBE2A82896300602815 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -81,6 +87,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F0BD72772A85311200C02B94 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				F0BD727B2A85315C00C02B94 /* HomeViewController.h */,
+				F0BD727C2A85315C00C02B94 /* HomeViewController.m */,
+				F0BD727E2A85323500C02B94 /* MapViewController.h */,
+				F0BD727F2A85323500C02B94 /* MapViewController.m */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		F0BDAFB12A82896300602815 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +121,7 @@
 		F0BDAFBC2A82896300602815 /* PlaceReminder */ = {
 			isa = PBXGroup;
 			children = (
+				F0BD72772A85311200C02B94 /* ViewController */,
 				F0BDAFBD2A82896300602815 /* AppDelegate.h */,
 				F0BDAFBE2A82896300602815 /* AppDelegate.m */,
 				F0BDAFC02A82896300602815 /* SceneDelegate.h */,
@@ -269,6 +287,8 @@
 				F0BDAFC52A82896300602815 /* ViewController.m in Sources */,
 				F0BDAFBF2A82896300602815 /* AppDelegate.m in Sources */,
 				F0BDAFD02A82896400602815 /* main.m in Sources */,
+				F0BD72802A85323500C02B94 /* MapViewController.m in Sources */,
+				F0BD727D2A85315C00C02B94 /* HomeViewController.m in Sources */,
 				F0BDAFC22A82896300602815 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
