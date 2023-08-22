@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F09E99782A94BB8200B19370 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F09E99772A94BB8200B19370 /* DetailViewController.m */; };
 		F0BD727D2A85315C00C02B94 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BD727C2A85315C00C02B94 /* HomeViewController.m */; };
 		F0BD72802A85323500C02B94 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BD727F2A85323500C02B94 /* MapViewController.m */; };
 		F0BDAFBF2A82896300602815 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BDAFBE2A82896300602815 /* AppDelegate.m */; };
@@ -19,6 +20,9 @@
 		F0BDAFDA2A82896400602815 /* PlaceReminderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BDAFD92A82896400602815 /* PlaceReminderTests.m */; };
 		F0BDAFE42A82896400602815 /* PlaceReminderUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BDAFE32A82896400602815 /* PlaceReminderUITests.m */; };
 		F0BDAFE62A82896400602815 /* PlaceReminderUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F0BDAFE52A82896400602815 /* PlaceReminderUITestsLaunchTests.m */; };
+		F0FD5BB72A8BD0360063233D /* Poi.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FD5BB62A8BD0360063233D /* Poi.m */; };
+		F0FD5BBA2A8BD2380063233D /* PoiManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FD5BB92A8BD2380063233D /* PoiManager.m */; };
+		F0FD5BBD2A8BD6820063233D /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0FD5BBC2A8BD6820063233D /* ListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F09E99762A94BB8200B19370 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		F09E99772A94BB8200B19370 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		F0BD727B2A85315C00C02B94 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		F0BD727C2A85315C00C02B94 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		F0BD727E2A85323500C02B94 /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -60,6 +66,12 @@
 		F0BDAFDF2A82896400602815 /* PlaceReminderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlaceReminderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0BDAFE32A82896400602815 /* PlaceReminderUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceReminderUITests.m; sourceTree = "<group>"; };
 		F0BDAFE52A82896400602815 /* PlaceReminderUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlaceReminderUITestsLaunchTests.m; sourceTree = "<group>"; };
+		F0FD5BB52A8BD0360063233D /* Poi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Poi.h; sourceTree = "<group>"; };
+		F0FD5BB62A8BD0360063233D /* Poi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Poi.m; sourceTree = "<group>"; };
+		F0FD5BB82A8BD2380063233D /* PoiManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PoiManager.h; sourceTree = "<group>"; };
+		F0FD5BB92A8BD2380063233D /* PoiManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PoiManager.m; sourceTree = "<group>"; };
+		F0FD5BBB2A8BD6820063233D /* ListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
+		F0FD5BBC2A8BD6820063233D /* ListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +106,10 @@
 				F0BD727C2A85315C00C02B94 /* HomeViewController.m */,
 				F0BD727E2A85323500C02B94 /* MapViewController.h */,
 				F0BD727F2A85323500C02B94 /* MapViewController.m */,
+				F0FD5BBB2A8BD6820063233D /* ListViewController.h */,
+				F0FD5BBC2A8BD6820063233D /* ListViewController.m */,
+				F09E99762A94BB8200B19370 /* DetailViewController.h */,
+				F09E99772A94BB8200B19370 /* DetailViewController.m */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -121,6 +137,7 @@
 		F0BDAFBC2A82896300602815 /* PlaceReminder */ = {
 			isa = PBXGroup;
 			children = (
+				F0FD5BB42A8BD0170063233D /* Classi */,
 				F0BD72772A85311200C02B94 /* ViewController */,
 				F0BDAFBD2A82896300602815 /* AppDelegate.h */,
 				F0BDAFBE2A82896300602815 /* AppDelegate.m */,
@@ -152,6 +169,17 @@
 				F0BDAFE52A82896400602815 /* PlaceReminderUITestsLaunchTests.m */,
 			);
 			path = PlaceReminderUITests;
+			sourceTree = "<group>";
+		};
+		F0FD5BB42A8BD0170063233D /* Classi */ = {
+			isa = PBXGroup;
+			children = (
+				F0FD5BB52A8BD0360063233D /* Poi.h */,
+				F0FD5BB62A8BD0360063233D /* Poi.m */,
+				F0FD5BB82A8BD2380063233D /* PoiManager.h */,
+				F0FD5BB92A8BD2380063233D /* PoiManager.m */,
+			);
+			path = Classi;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,7 +314,11 @@
 			files = (
 				F0BDAFC52A82896300602815 /* ViewController.m in Sources */,
 				F0BDAFBF2A82896300602815 /* AppDelegate.m in Sources */,
+				F0FD5BBD2A8BD6820063233D /* ListViewController.m in Sources */,
+				F0FD5BBA2A8BD2380063233D /* PoiManager.m in Sources */,
 				F0BDAFD02A82896400602815 /* main.m in Sources */,
+				F09E99782A94BB8200B19370 /* DetailViewController.m in Sources */,
+				F0FD5BB72A8BD0360063233D /* Poi.m in Sources */,
 				F0BD72802A85323500C02B94 /* MapViewController.m in Sources */,
 				F0BD727D2A85315C00C02B94 /* HomeViewController.m in Sources */,
 				F0BDAFC22A82896300602815 /* SceneDelegate.m in Sources */,
