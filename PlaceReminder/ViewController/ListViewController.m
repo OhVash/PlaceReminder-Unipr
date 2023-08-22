@@ -12,7 +12,7 @@
 @interface ListViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSArray<Poi *> *Pois;
+@property (nonatomic, strong) NSMutableArray<Poi *> *Pois;
 @property (nonatomic, strong) Poi *selectedPoi;
 
 
@@ -27,7 +27,7 @@
                                              selector:@selector(updateData)
                                                  name:@"PoiDataUpdatedNotification"
                                                object:nil];
-    
+
     // Register the cell class or nib with the appropriate identifier
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
@@ -43,15 +43,27 @@
     [self.tableView reloadData];
 }
 
+- (void)detailViewControllerDidDeletePoi:(Poi *)poi {
+    // Rimuovi il Poi dall'array e aggiorna la tabella
+    NSUInteger index = [self.Pois indexOfObject:poi];
+    if (index != NSNotFound) {
+        [self.Pois removeObjectAtIndex:index];
+        [self.tableView reloadData];
+    }
+
+}
+
 
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"segueShowPoiDetail"]) {
-        DetailViewController *detailViewController = segue.destinationViewController;
-        detailViewController.selectedPoi = self.selectedPoi;
-    }
+    if ([segue.identifier isEqualToString:@"showDetailSegue"]) {
+           NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+           DetailViewController *detailViewController = (DetailViewController *)segue.destinationViewController;
+           detailViewController.selectedPoi = self.Pois[indexPath.row];
+           detailViewController.poiIndex = indexPath.row; // Passa l'indice all DetailViewController
+       }
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
@@ -77,6 +89,17 @@
        [self.navigationController pushViewController:detailViewController animated:YES];
     
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        PoiManager *poiManager = [PoiManager sharedManager];
+        [poiManager removePoiAtIndex:indexPath.row];
+        
+        [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+    }
+}
+
 /*
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {
     <#code#>

@@ -29,11 +29,11 @@
     }
 }
 
-- (NSArray<Poi *> *)getAllPoi {
+- (NSMutableArray<Poi *> *)getAllPoi {
         NSArray<Poi *> *sortedPoiArray = [self.poiList sortedArrayUsingComparator:^NSComparisonResult(Poi *poi1, Poi *poi2) {
             return [poi2.timestamp compare:poi1.timestamp]; // Ordina dal più recente al meno recente
         }];
         
-        return sortedPoiArray;
+        return [sortedPoiArray mutableCopy];
     }
 @end

@@ -128,7 +128,7 @@
         <!--List View Controller-->
         <scene sceneID="Z7K-lr-Aw8">
             <objects>
-                <viewController restorationIdentifier="Cell" id="F7v-lK-uMa" customClass="ListViewController" sceneMemberID="viewController">
+                <viewController id="F7v-lK-uMa" customClass="ListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="a3M-kz-e8J">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -222,7 +222,13 @@
                         <viewLayoutGuide key="safeArea" id="y9u-8P-Q8c"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="6eC-gI-ztm"/>
+                    <navigationItem key="navigationItem" id="6eC-gI-ztm">
+                        <barButtonItem key="rightBarButtonItem" title="Delete" id="BmZ-ME-1H6">
+                            <connections>
+                                <action selector="deleteButton:" destination="age-Fr-cDy" id="bbr-Nc-SQg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="PoiMap" destination="iaX-WP-z4h" id="9Wn-zB-tji"/>
                         <outlet property="address" destination="2ue-tf-O0A" id="f8L-mq-hhF"/>

@@ -6,6 +6,10 @@
 //
 
 #import "DetailViewController.h"
+@protocol DetailViewControllerDelegate <NSObject>
+- (void)detailViewControllerDidDeletePoi:(Poi *)poi;
+@end
+
 
 @interface DetailViewController ()
 @property (weak, nonatomic) IBOutlet MKMapView *PoiMap;
@@ -13,6 +17,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *address;
 @property (weak, nonatomic) IBOutlet UITextField *description_text;
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
+@property (nonatomic, weak) id<DetailViewControllerDelegate> delegate;
+
+
+
 
 @end
 
@@ -62,6 +70,32 @@
         self.timestampLabel.text = timestampString;
 
 }
+
+- (IBAction)deleteButton:(id)sender {
+    
+    PoiManager *poiManager = [PoiManager sharedManager];
+    [poiManager removePoiAtIndex:self.poiIndex];
+        
+            
+    // Remove the annotation from the map
+    for (id<MKAnnotation> annotation in self.PoiMap.annotations) {
+        if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
+            CLLocationCoordinate2D poiCoordinate = self.selectedPoi.location;
+            CLLocationCoordinate2D annotationCoordinate = annotation.coordinate;
+            if (annotationCoordinate.latitude == poiCoordinate.latitude &&
+                annotationCoordinate.longitude == poiCoordinate.longitude) {
+                [self.PoiMap removeAnnotation:annotation];
+                break;
+                }
+            }
+        }
+    if ([self.delegate respondsToSelector:@selector(detailViewControllerDidDeletePoi:)]) {
+            [self.delegate detailViewControllerDidDeletePoi:self.selectedPoi];
+        }
+    [self.navigationController popViewControllerAnimated:YES];
+                
+    }
+
 - (IBAction)editButton:(id)sender {
     // Salva le modifiche alle informazioni del Poi
     self.selectedPoi.name = self.name.text;

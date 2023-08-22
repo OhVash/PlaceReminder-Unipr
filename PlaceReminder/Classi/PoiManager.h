@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)savePoi:(Poi *)poi; // Aggiunge un segnaposto alla lista
 - (void)removePoiAtIndex:(NSUInteger)index; // Rimuove un segnaposto dalla lista
-- (NSArray<Poi *> *)getAllPoi; // Restituisce tutti i segnaposti
+- (NSMutableArray<Poi *> *)getAllPoi; // Restituisce tutti i segnaposti
 @end
 
 NS_ASSUME_NONNULL_END
