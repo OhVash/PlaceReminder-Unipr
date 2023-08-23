@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)sharedManager; // Metodo per ottenere l'istanza condivisa
 
 - (void)savePoi:(Poi *)poi; // Aggiunge un segnaposto alla lista
-- (void)removePoiAtIndex:(NSUInteger)index; // Rimuove un segnaposto dalla lista
+- (void)removePoi:(Poi *)poi;
 - (NSMutableArray<Poi *> *)getAllPoi; // Restituisce tutti i segnaposti
 @end
 

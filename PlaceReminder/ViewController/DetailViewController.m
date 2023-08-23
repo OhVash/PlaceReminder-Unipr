@@ -73,41 +73,63 @@
 
 - (IBAction)deleteButton:(id)sender {
     
-    PoiManager *poiManager = [PoiManager sharedManager];
-    [poiManager removePoiAtIndex:self.poiIndex];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Conferma Eliminazione" message:@"Sei sicuro di voler eliminare questo Poi?" preferredStyle:UIAlertControllerStyleAlert];
         
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Annulla" style:UIAlertActionStyleCancel handler:nil];
+        
+        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Elimina" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            // Rimuovi il Poi dal PoiManager
+            [[PoiManager sharedManager] removePoi:self.selectedPoi];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataDeletedNotification" object:nil];
             
-    // Remove the annotation from the map
-    for (id<MKAnnotation> annotation in self.PoiMap.annotations) {
-        if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
-            CLLocationCoordinate2D poiCoordinate = self.selectedPoi.location;
-            CLLocationCoordinate2D annotationCoordinate = annotation.coordinate;
-            if (annotationCoordinate.latitude == poiCoordinate.latitude &&
-                annotationCoordinate.longitude == poiCoordinate.longitude) {
-                [self.PoiMap removeAnnotation:annotation];
-                break;
+            // Rimuovi l'annotazione dalla mappa
+            for (id<MKAnnotation> annotation in self.PoiMap.annotations) {
+                if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
+                    CLLocationCoordinate2D poiCoordinate = self.selectedPoi.location;
+                    CLLocationCoordinate2D annotationCoordinate = annotation.coordinate;
+                    if (annotationCoordinate.latitude == poiCoordinate.latitude &&
+                        annotationCoordinate.longitude == poiCoordinate.longitude) {
+                        [self.PoiMap removeAnnotation:annotation];
+                        break;
+                    }
                 }
             }
-        }
-    if ([self.delegate respondsToSelector:@selector(detailViewControllerDidDeletePoi:)]) {
-            [self.delegate detailViewControllerDidDeletePoi:self.selectedPoi];
-        }
-    [self.navigationController popViewControllerAnimated:YES];
-                
+        // Torna indietro alla vista precedente
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
+        
+        [alert addAction:cancelAction];
+        [alert addAction:deleteAction];
+        
+        [self presentViewController:alert animated:YES completion:nil];
     }
+                
 
 - (IBAction)editButton:(id)sender {
-    // Salva le modifiche alle informazioni del Poi
-    self.selectedPoi.name = self.name.text;
-    self.selectedPoi.address = self.address.text;
-    self.selectedPoi.poiDescription = self.description_text.text;
-    
-    // Aggiorna il timestamp
-    self.selectedPoi.timestamp = [NSDate date];
-    // Invia una notifica di aggiornamento dati
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataUpdatedNotification" object:nil];
-
-       [self.navigationController popViewControllerAnimated:YES];
+    UIAlertController *confirmationAlert = [UIAlertController alertControllerWithTitle:@"Conferma Modifica"
+                                                                                   message:@"Sei sicuro di voler salvare le modifiche?"
+                                                                            preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Annulla" style:UIAlertActionStyleCancel handler:nil];
+        
+        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Conferma" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            // Salva le modifiche alle informazioni del Poi
+            self.selectedPoi.name = self.name.text;
+            self.selectedPoi.address = self.address.text;
+            self.selectedPoi.poiDescription = self.description_text.text;
+            
+            // Aggiorna il timestamp
+            self.selectedPoi.timestamp = [NSDate date];
+            // Invia una notifica di aggiornamento dati
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataUpdatedNotification" object:nil];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        
+        [confirmationAlert addAction:cancelAction];
+        [confirmationAlert addAction:confirmAction];
+        
+        [self presentViewController:confirmationAlert animated:YES completion:nil];
 }
 
 /*

@@ -23,10 +23,8 @@
     [self.poiList addObject:poi];
 }
 
-- (void)removePoiAtIndex:(NSUInteger)index {
-    if (index < self.poiList.count) {
-        [self.poiList removeObjectAtIndex:index];
-    }
+- (void)removePoi:(Poi *)poi {
+    [self.poiList removeObject:poi];
 }
 
 - (NSMutableArray<Poi *> *)getAllPoi {

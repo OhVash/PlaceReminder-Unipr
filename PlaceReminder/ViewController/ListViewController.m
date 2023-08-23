@@ -27,6 +27,10 @@
                                              selector:@selector(updateData)
                                                  name:@"PoiDataUpdatedNotification"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(deleteData)
+                                                     name:@"PoiDataDeletedNotification"
+                                                   object:nil];
 
     // Register the cell class or nib with the appropriate identifier
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
@@ -43,13 +47,11 @@
     [self.tableView reloadData];
 }
 
-- (void)detailViewControllerDidDeletePoi:(Poi *)poi {
-    // Rimuovi il Poi dall'array e aggiorna la tabella
-        [self.Pois removeObject:poi];
-        [self.tableView reloadData];
-    [self.navigationController popViewControllerAnimated:YES];
-    }
-
+- (void)deleteData {
+    // Aggiorna l'array dei Poi e la tabella
+    [[PoiManager sharedManager] removePoi:self.selectedPoi];
+    [self.tableView reloadData];
+}
 
 
 #pragma mark - Navigation
@@ -88,15 +90,15 @@
     
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+/* - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         PoiManager *poiManager = [PoiManager sharedManager];
-        [poiManager removePoiAtIndex:indexPath.row];
+        [poiManager removePoi:self.selectedPoi];
         
         [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
     }
-}
+} */
 
 /*
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {
