@@ -45,13 +45,11 @@
 
 - (void)detailViewControllerDidDeletePoi:(Poi *)poi {
     // Rimuovi il Poi dall'array e aggiorna la tabella
-    NSUInteger index = [self.Pois indexOfObject:poi];
-    if (index != NSNotFound) {
-        [self.Pois removeObjectAtIndex:index];
+        [self.Pois removeObject:poi];
         [self.tableView reloadData];
+    [self.navigationController popViewControllerAnimated:YES];
     }
 
-}
 
 
 #pragma mark - Navigation

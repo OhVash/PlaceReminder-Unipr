@@ -107,8 +107,7 @@
     // Invia una notifica di aggiornamento dati
     [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataUpdatedNotification" object:nil];
 
-    // Torna alla schermata precedente
-    [self.navigationController popViewControllerAnimated:YES];
+       [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*

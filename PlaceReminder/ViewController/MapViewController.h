@@ -6,12 +6,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <UserNotifications/UserNotifications.h>
 #import "Poi.h"
 #import "PoiManager.h"
+#import "HomeViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MapViewController : UIViewController
+@interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 - (void)addPoiToMap:(Poi *)poi;
 @end
 
