@@ -85,7 +85,7 @@
             // Aggiungi un'annotazione per il Poi
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
             annotation.coordinate = location.coordinate;
-            annotation.title = poi.name;
+            annotation.title = poi.name; // Imposta il nome del POI come titolo dell'annotazione
             annotation.subtitle = poi.poiDescription;
             [self.mapView addAnnotation:annotation];
         }
@@ -140,13 +140,41 @@
     if (pinView == nil) {
         pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"pin"];
         pinView.animatesDrop = YES;
-        pinView.canShowCallout = YES;
+        pinView.canShowCallout = NO; // Disabilita il callout predefinito
+        
+        // Aggiungi una sottoview personalizzata per il nome del POI
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(-70, -20, 150, 20)]; // Regola la posizione come preferisci
+        titleLabel.text = annotation.title;
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        [pinView addSubview:titleLabel];
     } else {
         pinView.annotation = annotation;
     }
     
     return pinView;
 }
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    if ([view.annotation isKindOfClass:[MKPointAnnotation class]]) {
+        MKPointAnnotation *selectedAnnotation = (MKPointAnnotation *)view.annotation;
+        
+        // Cerca il Poi corrispondente all'annotazione selezionata
+        NSArray<Poi *> *pois = [PoiManager.sharedManager getAllPoi];
+        for (Poi *poi in pois) {
+            if ([poi.name isEqualToString:selectedAnnotation.title]) {
+                // Crea un'istanza della DetailViewController e passa il Poi
+                DetailViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
+                detailViewController.selectedPoi = poi;
+                [self.navigationController pushViewController:detailViewController animated:YES];
+                break; // Esci dal ciclo una volta trovato il Poi corrispondente
+            }
+        }
+        
+        // Deseleziona l'annotazione per evitare che rimanga selezionata
+        [self.mapView deselectAnnotation:selectedAnnotation animated:NO];
+    }
+}
+
+
 
 @end
 
