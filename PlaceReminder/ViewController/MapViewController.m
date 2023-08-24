@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) NSArray<Poi *> *poiList;
 
 @end
 
@@ -21,16 +22,11 @@
     [super viewDidLoad];
     
     [self configureMapView];
-    
     self.mapView.delegate = self;
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    [self.locationManager requestAlwaysAuthorization];
-    [self.locationManager requestWhenInUseAuthorization]; // Richiedi l'autorizzazione per l'uso della posizione
     [self.locationManager startUpdatingLocation]; // Inizia a monitorare la posizione dell'utente
-} // Inizia a monitorare la posizione dell'utente
-
-
+}
 
 - (void)configureMapView {
     // Imposta la regione per mostrare l'Italia intera
@@ -40,39 +36,18 @@
     [self.mapView setRegion:region animated:YES];
     self.mapView.showsUserLocation = YES;
     
-    // Aggiungi i Poi alla mappa
-    NSArray<Poi *> *pois = [PoiManager.sharedManager getAllPoi];
-    for (Poi *poi in pois) {
+    // Aggiungi i Poi salvati alla mappa
+    self.poiList = [PoiManager.sharedManager getAllPoi];
+    for (Poi *poi in self.poiList) {
         [self addPoiToMap:poi];
         [self startMonitoringGeofenceForPoi:poi];
     }
 }
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
-    if ([view.annotation isKindOfClass:[MKPointAnnotation class]]) {
-        MKPointAnnotation *selectedAnnotation = (MKPointAnnotation *)view.annotation;
-        
-        // Cerca il Poi corrispondente all'annotazione selezionata
-        NSArray<Poi *> *pois = [PoiManager.sharedManager getAllPoi];
-        for (Poi *poi in pois) {
-            if ([poi.name isEqualToString:selectedAnnotation.title]) {
-                // Crea un'istanza della DetailViewController e passa il Poi
-                DetailViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
-                detailViewController.selectedPoi = poi;
-                [self.navigationController pushViewController:detailViewController animated:YES];
-                break; // Esci dal ciclo una volta trovato il Poi corrispondente
-            }
-        }
-        
-        // Deseleziona l'annotazione per evitare che rimanga selezionata
-        [self.mapView deselectAnnotation:selectedAnnotation animated:NO];
-    }
-}
-
-
 - (void)addPoiToMap:(Poi *)poi {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:poi.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+    [geocoder geocodeAddressString:poi.address
+                 completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         if (error) {
             NSLog(@"Geocoding error: %@", error.localizedDescription);
             return;
@@ -82,10 +57,10 @@
             CLPlacemark *placemark = placemarks.firstObject;
             CLLocation *location = placemark.location;
             
-            // Aggiungi un'annotazione per il Poi
+            // Aggiungi un pin per il Poi
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
             annotation.coordinate = location.coordinate;
-            annotation.title = poi.name; // Imposta il nome del POI come titolo dell'annotazione
+            annotation.title = poi.name; // Imposta il nome del poi come titolo del pin
             annotation.subtitle = poi.poiDescription;
             [self.mapView addAnnotation:annotation];
         }
@@ -94,7 +69,8 @@
 
 - (void)startMonitoringGeofenceForPoi:(Poi *)poi {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:poi.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+    [geocoder geocodeAddressString:poi.address
+                 completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         if (error) {
             NSLog(@"Geocoding error: %@", error.localizedDescription);
             return;
@@ -104,32 +80,37 @@
             CLPlacemark *placemark = placemarks.firstObject;
             CLLocationCoordinate2D poiLocation = placemark.location.coordinate;
             
-            CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:poiLocation radius:300 identifier:poi.name]; // Ad esempio, usa il nome del Poi come identifier
+            CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:poiLocation
+                                                                         radius:100
+                                                                     identifier:poi.name]; // Ad esempio, usa il nome del Poi come identifier
             region.notifyOnEntry = YES;
             [self.locationManager startMonitoringForRegion:region];
         }
     }];
 }
 
+#pragma mark - MKMapViewDelegate
 
-#pragma mark - CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    if ([region isKindOfClass:[CLCircularRegion class]]) {
-        CLCircularRegion *circularRegion = (CLCircularRegion *)region;
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    if ([view.annotation isKindOfClass:[MKPointAnnotation class]]) {
+        MKPointAnnotation *selectedAnnotation = (MKPointAnnotation *)view.annotation;
         
-        // Crea una notifica locale
-        UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
-        content.title = [NSString localizedUserNotificationStringForKey:@"Promemoria Attivo" arguments:nil];
-        content.body = [NSString stringWithFormat:@"Sei vicino a %@", circularRegion.identifier];
-        content.sound = [UNNotificationSound defaultSound];
+    // Cerca il Poi corrispondente al pin selezionato
+    for (Poi *poi in self.poiList) {
+        if ([poi.name isEqualToString:selectedAnnotation.title]) {
+            // Crea un'istanza della DetailViewController e passa il Poi
+            DetailViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
+            detailViewController.selectedPoi = poi;
+            [self.navigationController pushViewController:detailViewController animated:YES];
+            break; // Esci dal ciclo una volta trovato il Poi corrispondente
+        }
+    }
         
-        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:circularRegion.identifier content:content trigger:nil];
-        [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
+    // Deseleziona l'annotazione per evitare che rimanga selezionata
+    [self.mapView deselectAnnotation:selectedAnnotation animated:NO];
+        
     }
 }
-
-#pragma mark - MKMapViewDelegate
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
@@ -153,28 +134,23 @@
     
     return pinView;
 }
-- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
-    if ([view.annotation isKindOfClass:[MKPointAnnotation class]]) {
-        MKPointAnnotation *selectedAnnotation = (MKPointAnnotation *)view.annotation;
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+    if ([region isKindOfClass:[CLCircularRegion class]]) {
+        CLCircularRegion *circularRegion = (CLCircularRegion *)region;
         
-        // Cerca il Poi corrispondente all'annotazione selezionata
-        NSArray<Poi *> *pois = [PoiManager.sharedManager getAllPoi];
-        for (Poi *poi in pois) {
-            if ([poi.name isEqualToString:selectedAnnotation.title]) {
-                // Crea un'istanza della DetailViewController e passa il Poi
-                DetailViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
-                detailViewController.selectedPoi = poi;
-                [self.navigationController pushViewController:detailViewController animated:YES];
-                break; // Esci dal ciclo una volta trovato il Poi corrispondente
-            }
-        }
+        // Crea una notifica locale
+        UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
+        content.title = [NSString localizedUserNotificationStringForKey:@"Promemoria Attivo" arguments:nil];
+        content.body = [NSString stringWithFormat:@"Sei vicino a %@", circularRegion.identifier];
+        content.sound = [UNNotificationSound defaultSound];
         
-        // Deseleziona l'annotazione per evitare che rimanga selezionata
-        [self.mapView deselectAnnotation:selectedAnnotation animated:NO];
+        UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:circularRegion.identifier content:content trigger:nil];
+        [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
     }
 }
-
-
 
 @end
 

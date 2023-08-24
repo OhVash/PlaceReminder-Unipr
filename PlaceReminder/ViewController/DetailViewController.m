@@ -19,26 +19,21 @@
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 @property (nonatomic, weak) id<DetailViewControllerDelegate> delegate;
 
-
-
-
 @end
 
 @implementation DetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     self.name.text = self.selectedPoi.name;
     self.address.text = self.selectedPoi.address;
     self.description_text.text = self.selectedPoi.poiDescription;
-    
-    // Imposta la mappa per visualizzare la posizione del Poi
-      CLLocationCoordinate2D poiCoordinate = self.selectedPoi.location;
-      MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(poiCoordinate, 1000, 1000);
-      [self.PoiMap setRegion:region animated:YES];
-    
-    
+    [self setupDetails];
+
+}
+
+- (void)setupDetails {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:self.selectedPoi.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         if (error) {
@@ -68,78 +63,66 @@
         dateFormatter.dateFormat = @"dd/MM/yyyy HH:mm:ss";
         NSString *timestampString = [dateFormatter stringFromDate:self.selectedPoi.timestamp];
         self.timestampLabel.text = timestampString;
-
 }
 
+#pragma mark - Buttons
+
 - (IBAction)deleteButton:(id)sender {
-    
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Conferma Eliminazione" message:@"Sei sicuro di voler eliminare questo Poi?" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Conferma Eliminazione"
+                                                                       message:@"Sei sicuro di voler eliminare questo Poi?"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Annulla" style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Annulla"
+                                                               style:UIAlertActionStyleCancel handler:nil];
         
-        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Elimina" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Elimina"
+                                                               style:UIAlertActionStyleDestructive
+                                                             handler:^(UIAlertAction * _Nonnull action) {
             // Rimuovi il Poi dal PoiManager
             [[PoiManager sharedManager] removePoi:self.selectedPoi];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataDeletedNotification" object:nil];
             
-            // Rimuovi l'annotazione dalla mappa
+            // Rimuovo il pin dalla mappa
             for (id<MKAnnotation> annotation in self.PoiMap.annotations) {
                 if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
-                    CLLocationCoordinate2D poiCoordinate = self.selectedPoi.location;
-                    CLLocationCoordinate2D annotationCoordinate = annotation.coordinate;
-                    if (annotationCoordinate.latitude == poiCoordinate.latitude &&
-                        annotationCoordinate.longitude == poiCoordinate.longitude) {
                         [self.PoiMap removeAnnotation:annotation];
                         break;
                     }
-                }
             }
-        // Torna indietro alla vista precedente
             [self.navigationController popToRootViewControllerAnimated:YES];
         }];
-        
         [alert addAction:cancelAction];
         [alert addAction:deleteAction];
-        
         [self presentViewController:alert animated:YES completion:nil];
     }
                 
 
 - (IBAction)editButton:(id)sender {
     UIAlertController *confirmationAlert = [UIAlertController alertControllerWithTitle:@"Conferma Modifica"
-                                                                                   message:@"Sei sicuro di voler salvare le modifiche?"
-                                                                            preferredStyle:UIAlertControllerStyleAlert];
+                                                                               message:@"Sei sicuro di voler salvare le modifiche?"
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Annulla" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Annulla"
+                                                               style:UIAlertActionStyleCancel handler:nil];
         
-        UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Conferma" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            // Salva le modifiche alle informazioni del Poi
-            self.selectedPoi.name = self.name.text;
-            self.selectedPoi.address = self.address.text;
-            self.selectedPoi.poiDescription = self.description_text.text;
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Conferma"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * _Nonnull action) {
+        // Salva le modifiche alle informazioni del Poi
+        self.selectedPoi.name = self.name.text;
+        self.selectedPoi.address = self.address.text;
+        self.selectedPoi.poiDescription = self.description_text.text;
             
-            // Aggiorna il timestamp
-            self.selectedPoi.timestamp = [NSDate date];
-            // Invia una notifica di aggiornamento dati
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataUpdatedNotification" object:nil];
-            
-            [self.navigationController popViewControllerAnimated:YES];
-        }];
+        // Aggiorna il timestamp
+        self.selectedPoi.timestamp = [NSDate date];
+        // Invia una notifica di aggiornamento dati
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataUpdatedNotification" object:nil];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }];
         
-        [confirmationAlert addAction:cancelAction];
-        [confirmationAlert addAction:confirmAction];
-        
-        [self presentViewController:confirmationAlert animated:YES completion:nil];
+    [confirmationAlert addAction:cancelAction];
+    [confirmationAlert addAction:confirmAction];
+    [self presentViewController:confirmationAlert animated:YES completion:nil];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

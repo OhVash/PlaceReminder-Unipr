@@ -14,7 +14,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
+
 - (void)addPoiToMap:(Poi *)poi;
+
 @end
 
 NS_ASSUME_NONNULL_END

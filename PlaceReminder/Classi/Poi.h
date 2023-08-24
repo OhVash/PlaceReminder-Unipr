@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Poi : NSObject
 
-@property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, copy) NSString *address;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *poiDescription;
@@ -21,7 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithName:(NSString *)name
                      address:(NSString *)address
                  description:(NSString *)poiDescription
-                    location:(CLLocationCoordinate2D)location
                    timestamp:(NSDate *)timestamp;
 
 @end
