@@ -27,6 +27,9 @@
     self.poiList = [[PoiManager sharedManager] getAllPoi];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    
+    // Register the cell class or nib with the appropriate identifier
+        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 }
 
 
@@ -42,7 +45,7 @@
     }
 }
 
-#pragma mark - TableView
+#pragma mark - UITableView
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
@@ -50,7 +53,6 @@
        Poi *poi = self.poiList[indexPath.row];
        cell.textLabel.text = poi.name;
        return cell;
-    
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
