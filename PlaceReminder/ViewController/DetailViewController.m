@@ -6,18 +6,13 @@
 //
 
 #import "DetailViewController.h"
-@protocol DetailViewControllerDelegate <NSObject>
-- (void)detailViewControllerDidDeletePoi:(Poi *)poi;
-@end
-
 
 @interface DetailViewController ()
-@property (weak, nonatomic) IBOutlet MKMapView *PoiMap;
+@property (weak, nonatomic) IBOutlet MKMapView *poiMap;
 @property (weak, nonatomic) IBOutlet UITextField *name;
 @property (weak, nonatomic) IBOutlet UITextField *address;
 @property (weak, nonatomic) IBOutlet UITextField *description_text;
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
-@property (nonatomic, weak) id<DetailViewControllerDelegate> delegate;
 
 @end
 
@@ -51,11 +46,12 @@
             annotation.title = self.selectedPoi.name;
             annotation.subtitle = self.selectedPoi.poiDescription;
             
-            [self.PoiMap addAnnotation:annotation];
+            [self.poiMap addAnnotation:annotation];
             
             // Imposta la regione della mappa per visualizzare l'annotazione
             MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, 1000, 1000);
-            [self.PoiMap setRegion:region animated:YES];
+            [self.poiMap setRegion:region animated:NO];
+            self.poiMap.showsUserLocation = YES;
         }
     }];
     
@@ -83,9 +79,9 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataDeletedNotification" object:nil];
             
             // Rimuovo il pin dalla mappa
-            for (id<MKAnnotation> annotation in self.PoiMap.annotations) {
+            for (id<MKAnnotation> annotation in self.poiMap.annotations) {
                 if ([annotation isKindOfClass:[MKPointAnnotation class]]) {
-                        [self.PoiMap removeAnnotation:annotation];
+                        [self.poiMap removeAnnotation:annotation];
                         break;
                     }
             }

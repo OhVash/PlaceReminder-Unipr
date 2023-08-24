@@ -31,7 +31,7 @@
 - (void)configureMapView {
     // Imposta la regione per mostrare l'Italia intera
     CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(41.9028, 12.4964);
-    MKCoordinateSpan span = MKCoordinateSpanMake(18.0, 18.0);
+    MKCoordinateSpan span = MKCoordinateSpanMake(15.0, 15.0);
     MKCoordinateRegion region = MKCoordinateRegionMake(centerCoordinate, span);
     [self.mapView setRegion:region animated:YES];
     self.mapView.showsUserLocation = YES;

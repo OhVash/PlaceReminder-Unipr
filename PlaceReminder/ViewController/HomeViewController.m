@@ -37,6 +37,19 @@
     NSString *poiDescription = self.descriptionTextField.text;
     NSDate *timestamp = [NSDate date];
     
+    // Verifica se nome e indirizzo sono vuoti
+    if (name.length == 0 || address.length == 0) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Errore"
+                                                                       message:@"Nome e indirizzo devono essere compilati"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+            
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+        [alert addAction:okAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        return; // Esce dalla funzione senza salvare il Poi
+        }
     // Creazione del Poi con gli elementi inseriti
     Poi *newPoi = [[Poi alloc] initWithName:name
                                      address:address
