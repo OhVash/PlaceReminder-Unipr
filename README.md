@@ -1,4 +1,4 @@
-# MyCurrency-Unipr
+# PlaceReminder-Unipr
 
 <table>
 <caption id="multi_row">Contributers summarize</caption>
