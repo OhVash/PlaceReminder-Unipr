@@ -1,5 +1,11 @@
 # MyCurrency-Unipr
 
+<table>
+<caption id="multi_row">Contributers summarize</caption>
+<tr>    <th>Name      <th>Role               <th>Year
+<tr><td>Alessandro Vascelli   <td>Author  <td>2023
+</table>
+
 Questa applicazione e' stata progettata seguendo la consegna per l'esame di Programmazione di Sistemi Mobili dell'Universita' di Parma.
 
 Sviluppare un’applicazione per mantenere una lista di segnaposto geografici Un utente può salvare un segnaposto caratterizzato da:
@@ -11,12 +17,6 @@ Sviluppare un’applicazione per mantenere una lista di segnaposto geografici Un
 - La pressione di un marker sulla mappa deve mostrare un callout con informazioni generali e dare la possibilità di visualizzare tutti i dettagli
 - I segnaposto devono poter essere eliminati dall’utente
 - Quando l’utente entra nella regione (geofence) di un promemoria attivo l’app genera una notifica locale
-
-<table>
-<caption id="multi_row">Contributers summarize</caption>
-<tr>    <th>Name      <th>Role               <th>Year
-<tr><td>Alessandro Vascelli   <td>Author  <td>2023
-</table>
 
 ## Architettura
 
