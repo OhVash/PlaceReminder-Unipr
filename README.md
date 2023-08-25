@@ -33,7 +33,7 @@ Il programma si divide in 2 principali folder, una per le implementazioni dei va
    - HomeViewController
      Gestisce la vista della home page, nella quale sono presenti le textField per inserire nome, indirizzo (sia normale che in coordinate GPS), ed una descrizione opzionale, il bottone "Save"
      controlla che nome e indirizzo non siano vuoti, se tutto ok crea e salva il Poi nello sharedManager (passato poi alla lista).
-     <img width="276" alt="Screenshot 2023-08-25 alle 16 01 56" src="https://github.com/OhVash/PlaceReminder-Unipr/assets/106656351/b0a6efd2-a4a4-48fb-a862-0ed0ade55998">
+   
 
      
    - ListViewController
