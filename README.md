@@ -33,8 +33,6 @@ Il programma si divide in 2 principali folder, una per le implementazioni dei va
    - HomeViewController
      Gestisce la vista della home page, nella quale sono presenti le textField per inserire nome, indirizzo (sia normale che in coordinate GPS), ed una descrizione opzionale, il bottone "Save"
      controlla che nome e indirizzo non siano vuoti, se tutto ok crea e salva il Poi nello sharedManager (passato poi alla lista).
-   
-
      
    - ListViewController
      Metodi per la visualizzazione in una lista dei vari Poi salvati, utilizzando il metodo getAllPoi di PoiManager, viene riempita la lista; quest'utlima ordinata in base al timestamp di modifica più recente.
@@ -50,6 +48,16 @@ Il programma si divide in 2 principali folder, una per le implementazioni dei va
    - DetailViewController
      Vista che visualizza i dati del Poi in textField modificabili, nel caso in cui si voglia modificare il Poi direttamente senza crearne uno nuovo, è visibile anche il timestamp dell'ultima modifica.
      Metà schermo è occupato da una mapView che mostra la posizione del segnaposto.
+
+## Funzionamento
+Ecco alcune foto che mostrano il funzionamento dell'app
+
+- Home
+![IMG_1070](https://github.com/OhVash/PlaceReminder-Unipr/assets/106656351/77f1d4e4-359e-4b70-934c-bf0431f636a2)
+
+
+
+
      
      
      
