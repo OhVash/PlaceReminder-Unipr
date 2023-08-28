@@ -35,7 +35,6 @@
     MKCoordinateRegion region = MKCoordinateRegionMake(centerCoordinate, span);
     [self.mapView setRegion:region animated:YES];
     self.mapView.showsUserLocation = YES;
-    
     // Aggiungo i Poi salvati alla mappa
     self.poiList = [PoiManager.sharedManager getAllPoi];
     for (Poi *poi in self.poiList) {
