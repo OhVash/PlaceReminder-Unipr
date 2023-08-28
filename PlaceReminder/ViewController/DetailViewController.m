@@ -65,13 +65,13 @@
 
 - (IBAction)deleteButton:(id)sender {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Conferma Eliminazione"
-                                                                       message:@"Sei sicuro di voler eliminare questo Poi?"
+                                                                       message:@"Are you sure you want to delete this Poi?"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Annulla"
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                                style:UIAlertActionStyleCancel handler:nil];
         
-        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Elimina"
+        UIAlertAction *deleteAction = [UIAlertAction actionWithTitle:@"Confirm"
                                                                style:UIAlertActionStyleDestructive
                                                              handler:^(UIAlertAction * _Nonnull action) {
             // Rimuovi il Poi dal PoiManager
@@ -94,14 +94,14 @@
                 
 
 - (IBAction)editButton:(id)sender {
-    UIAlertController *confirmationAlert = [UIAlertController alertControllerWithTitle:@"Conferma Modifica"
-                                                                               message:@"Sei sicuro di voler salvare le modifiche?"
+    UIAlertController *confirmationAlert = [UIAlertController alertControllerWithTitle:@"Confirm Changes"
+                                                                               message:@"Are you sure you want to save the changes?"
                                                                         preferredStyle:UIAlertControllerStyleAlert];
         
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Annulla"
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                                style:UIAlertActionStyleCancel handler:nil];
         
-    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Conferma"
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
                                                                 style:UIAlertActionStyleDefault
                                                               handler:^(UIAlertAction * _Nonnull action) {
         // Salva le modifiche alle informazioni del Poi
@@ -113,7 +113,7 @@
         self.selectedPoi.timestamp = [NSDate date];
         // Invia una notifica di aggiornamento dati
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataUpdatedNotification" object:nil];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
     }];
         
     [confirmationAlert addAction:cancelAction];

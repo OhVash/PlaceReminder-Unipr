@@ -36,12 +36,12 @@
     [self.mapView setRegion:region animated:YES];
     self.mapView.showsUserLocation = YES;
     
-    // Aggiungi i Poi salvati alla mappa
+    // Aggiungo i Poi salvati alla mappa
     self.poiList = [PoiManager.sharedManager getAllPoi];
     for (Poi *poi in self.poiList) {
         [self addPoiToMap:poi];
         [self startMonitoringGeofenceForPoi:poi];
-    }
+    } 
 }
 
 - (void)addPoiToMap:(Poi *)poi {

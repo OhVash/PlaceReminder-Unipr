@@ -39,8 +39,8 @@
     
     // Verifica se nome e indirizzo sono vuoti
     if (name.length == 0 || address.length == 0) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Errore"
-                                                                       message:@"Nome e indirizzo devono essere compilati"
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:@"Name and address cannot be blank"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
             
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok"
@@ -58,10 +58,6 @@
        
     PoiManager *poiManager = [PoiManager sharedManager];
     [poiManager savePoi:newPoi];
-       
-    // Aggiungo il poi alla Map
-    MapViewController *mapViewController = (MapViewController *)self.tabBarController.viewControllers[1];
-    [mapViewController addPoiToMap:newPoi];
     
     // Ripristino le textField
     self.nameTextField.text = @"";
