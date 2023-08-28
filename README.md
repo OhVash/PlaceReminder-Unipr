@@ -50,11 +50,24 @@ Il programma si divide in 2 principali folder, una per le implementazioni dei va
      Metà schermo è occupato da una mapView che mostra la posizione del segnaposto.
 
 ## Funzionamento
-Ecco alcune foto che mostrano il funzionamento dell'app
+Ecco alcune foto che mostrano il funzionamento delle varie sezioni dell'app
 
 - Home
-
+Hint nelle textField per l'inserimento delle informazioni.
 <a href="https://ibb.co/ymCLpGD"><img src="https://i.ibb.co/bjVpFqx/IMG-1070.png" alt="IMG-1070" width="30%" align="center"></a>
+Ecco un esempio di inserimento:
+<a href="https://ibb.co/SdPB0d5"><img src="https://i.ibb.co/BrtBjrc/IMG-1071.png" alt="IMG-1071" width="30%" align="center"></a>
+
+-ListView
+<a href="https://ibb.co/p2gdPnt"><img src="https://i.ibb.co/hskVMCP/IMG-1075.jpg" alt="IMG-1075" width="30%" align="center"></a>
+
+-DetailView
+<a href="https://ibb.co/nRFyt9j"><img src="https://i.ibb.co/N7Mqb5K/IMG-1073.png" alt="IMG-1073" width="30%" align="center"></a>
+
+-MapView
+<a href="https://ibb.co/SXzQFgb"><img src="https://i.ibb.co/kgt3NTj/IMG-1074.png" alt="IMG-1074" width="30%" align="center"></a>
+
+
 
 
 
