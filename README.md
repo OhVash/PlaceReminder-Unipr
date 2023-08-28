@@ -54,7 +54,7 @@ Ecco alcune foto che mostrano il funzionamento dell'app
 
 - Home
 
-<a href="https://ibb.co/ymCLpGD"><img src="https://i.ibb.co/bjVpFqx/IMG-1070.png" alt="IMG-1070" border="0" align="center"></a>
+<a href="https://ibb.co/ymCLpGD"><img src="https://i.ibb.co/bjVpFqx/IMG-1070.png" alt="IMG-1070" width="30%" align="center"></a>
 
 
 
