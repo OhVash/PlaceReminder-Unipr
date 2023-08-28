@@ -53,7 +53,9 @@ Il programma si divide in 2 principali folder, una per le implementazioni dei va
 Ecco alcune foto che mostrano il funzionamento dell'app
 
 - Home
-![IMG_1070](https://github.com/OhVash/PlaceReminder-Unipr/assets/106656351/77f1d4e4-359e-4b70-934c-bf0431f636a2)
+
+<a href="https://ibb.co/ymCLpGD"><img src="https://i.ibb.co/bjVpFqx/IMG-1070.png" alt="IMG-1070" border="0" align="center"></a>
+
 
 
 
