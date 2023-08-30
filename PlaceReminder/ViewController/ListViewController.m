@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupNotification];
+    self.title=@"Your Saved Locations";
     
     // Carica i dati
     self.poiList = [[PoiManager sharedManager] getAllPoi];

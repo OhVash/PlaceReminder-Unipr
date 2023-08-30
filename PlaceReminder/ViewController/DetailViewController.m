@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *description_text;
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 
+
 @end
 
 @implementation DetailViewController
@@ -25,6 +26,7 @@
     self.address.text = self.selectedPoi.address;
     self.description_text.text = self.selectedPoi.poiDescription;
     [self setupDetails];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
 }
 
@@ -76,7 +78,6 @@
                                                              handler:^(UIAlertAction * _Nonnull action) {
             // Rimuovi il Poi dal PoiManager
             [[PoiManager sharedManager] removePoi:self.selectedPoi];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataDeletedNotification" object:nil];
             
             // Rimuovo il pin dalla mappa
             for (id<MKAnnotation> annotation in self.poiMap.annotations) {
@@ -85,11 +86,15 @@
                         break;
                     }
             }
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataDeletedNotification"
+                                                                object:nil];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }];
         [alert addAction:cancelAction];
         [alert addAction:deleteAction];
-        [self presentViewController:alert animated:YES completion:nil];
+        [self presentViewController:alert
+                           animated:YES
+                         completion:nil];
     }
                 
 
@@ -99,11 +104,12 @@
                                                                         preferredStyle:UIAlertControllerStyleAlert];
         
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
-                                                               style:UIAlertActionStyleCancel handler:nil];
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:nil];
         
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Confirm"
-                                                                style:UIAlertActionStyleDefault
-                                                              handler:^(UIAlertAction * _Nonnull action) {
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * _Nonnull action) {
         // Salva le modifiche alle informazioni del Poi
         self.selectedPoi.name = self.name.text;
         self.selectedPoi.address = self.address.text;
@@ -112,13 +118,16 @@
         // Aggiorna il timestamp
         self.selectedPoi.timestamp = [NSDate date];
         // Invia una notifica di aggiornamento dati
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataUpdatedNotification" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataUpdatedNotification"
+                                                            object:nil];
         [self.navigationController popViewControllerAnimated:YES];
     }];
         
     [confirmationAlert addAction:cancelAction];
     [confirmationAlert addAction:confirmAction];
-    [self presentViewController:confirmationAlert animated:YES completion:nil];
+    [self presentViewController:confirmationAlert
+                       animated:YES
+                     completion:nil];
 }
 
 @end
