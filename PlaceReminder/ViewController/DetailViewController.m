@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *description_text;
 @property (weak, nonatomic) IBOutlet UILabel *timestampLabel;
 
-
 @end
 
 @implementation DetailViewController
@@ -26,8 +25,6 @@
     self.address.text = self.selectedPoi.address;
     self.description_text.text = self.selectedPoi.poiDescription;
     [self setupDetails];
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-
 }
 
 - (void)setupDetails {
