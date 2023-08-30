@@ -86,7 +86,7 @@
                         break;
                     }
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataDeletedNotification"
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"PoiDataUpdatedNotification"
                                                                 object:nil];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }];

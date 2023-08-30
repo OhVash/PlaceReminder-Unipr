@@ -77,20 +77,10 @@
                                              selector:@selector(updateData)
                                                  name:@"PoiDataUpdatedNotification"
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(deleteData)
-                                                     name:@"PoiDataDeletedNotification"
-                                                   object:nil];
 }
 
 - (void)updateData {
-    self.poiList = [[PoiManager sharedManager] getAllPoi];
     [self.tableView reloadData];
 }
 
-- (void)deleteData {
-    // Aggiorna l'array dei Poi e la tabella
-    [[PoiManager sharedManager] removePoi:self.selectedPoi];
-    [self.tableView reloadData];
-}
 @end
