@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
 #import <UserNotifications/UserNotifications.h>
 #import "Poi.h"
 #import "PoiManager.h"

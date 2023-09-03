@@ -6,13 +6,10 @@
 //
 
 #import "ListViewController.h"
-#import "Poi.h"
-#import "PoiManager.h"
 
 @interface ListViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray<Poi *> *poiList;
 @property (nonatomic, strong) Poi *selectedPoi;
 
 @end
@@ -24,13 +21,11 @@
     [self setupNotification];
     self.title=@"Your Saved Locations";
     
-    // Carica i dati
-    self.poiList = [[PoiManager sharedManager] getAllPoi];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
     // Register the cell class or nib with the appropriate identifier
-        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
 }
 
 #pragma mark - Navigation
@@ -40,8 +35,8 @@
     if ([segue.identifier isEqualToString:@"showDetailSegue"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
         DetailViewController *detailViewController = (DetailViewController *)segue.destinationViewController;
-        detailViewController.selectedPoi = self.poiList[indexPath.row];
-        detailViewController.poiIndex = indexPath.row; // Passa l'indice all DetailViewController
+        detailViewController.selectedPoi = PoiManager.sharedManager.poiList[indexPath.row];
+        detailViewController.poiIndex = indexPath.row; // Passa l'indice al DetailViewController
     }
 }
 
@@ -50,19 +45,18 @@
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
-       Poi *poi = self.poiList[indexPath.row];
+       Poi *poi = PoiManager.sharedManager.getAllPoi[indexPath.row];
        cell.textLabel.text = poi.name;
        return cell;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.poiList.count;
+    return PoiManager.sharedManager.poiList.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-       
-    Poi *selectedPoi = self.poiList[indexPath.row];
+    Poi *selectedPoi = PoiManager.sharedManager.getAllPoi[indexPath.row];
        
     DetailViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
     detailViewController.selectedPoi = selectedPoi;

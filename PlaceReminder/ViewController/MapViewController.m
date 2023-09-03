@@ -6,13 +6,11 @@
 //
 
 #import "MapViewController.h"
-#import <MapKit/MapKit.h>
 
 @interface MapViewController () <MKMapViewDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) NSArray<Poi *> *poiList;
 
 @end
 
@@ -25,7 +23,6 @@
     self.mapView.delegate = self;
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
-    [self.locationManager startUpdatingLocation]; // Inizia a monitorare la posizione dell'utente
 }
 
 - (void)configureMapView {
@@ -35,9 +32,9 @@
     MKCoordinateRegion region = MKCoordinateRegionMake(centerCoordinate, span);
     [self.mapView setRegion:region animated:YES];
     self.mapView.showsUserLocation = YES;
+    
     // Aggiungo i Poi salvati alla mappa
-    self.poiList = [PoiManager.sharedManager getAllPoi];
-    for (Poi *poi in self.poiList) {
+    for (Poi *poi in PoiManager.sharedManager.poiList) {
         [self addPoiToMap:poi];
         [self startMonitoringGeofenceForPoi:poi];
     } 
@@ -81,7 +78,7 @@
             
             CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:poiLocation
                                                                          radius:100
-                                                                     identifier:poi.name]; // Ad esempio, usa il nome del Poi come identifier
+                                                                     identifier:poi.name];
             region.notifyOnEntry = YES;
             [self.locationManager startMonitoringForRegion:region];
         }
@@ -94,8 +91,8 @@
     if ([view.annotation isKindOfClass:[MKPointAnnotation class]]) {
         MKPointAnnotation *selectedAnnotation = (MKPointAnnotation *)view.annotation;
         
-    // Cerca il Poi corrispondente al pin selezionato
-    for (Poi *poi in self.poiList) {
+    // Cerca il Poi corrispondente al pin selezionato e apre la detail
+    for (Poi *poi in PoiManager.sharedManager.poiList) {
         if ([poi.name isEqualToString:selectedAnnotation.title]) {
             // Crea un'istanza della DetailViewController e passa il Poi
             DetailViewController *detailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailViewController"];
@@ -105,12 +102,13 @@
         }
     }
         
-    // Deseleziona l'annotazione per evitare che rimanga selezionata
+    // Deseleziono l'annotazione per evitare che rimanga selezionata
     [self.mapView deselectAnnotation:selectedAnnotation animated:NO];
         
     }
 }
 
+// personalizzazione poi
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
     if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;

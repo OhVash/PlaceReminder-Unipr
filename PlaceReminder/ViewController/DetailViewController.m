@@ -29,7 +29,8 @@
 
 - (void)setupDetails {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
-    [geocoder geocodeAddressString:self.selectedPoi.address completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+    [geocoder geocodeAddressString:self.selectedPoi.address
+                 completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         if (error) {
             NSLog(@"Geocoding error: %@", error.localizedDescription);
             return;
@@ -39,7 +40,7 @@
             CLPlacemark *placemark = placemarks.firstObject;
             CLLocation *location = placemark.location;
             
-            // Ora puoi utilizzare le coordinate per posizionare l'annotazione sulla mappa
+            // Marker sulla mappa
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
             annotation.coordinate = location.coordinate;
             annotation.title = self.selectedPoi.name;

@@ -22,6 +22,7 @@
     [super viewDidLoad];
     self.locationManager = [[CLLocationManager alloc] init];
     [self.locationManager requestWhenInUseAuthorization]; // richiesta localizzazione
+    [self.locationManager startUpdatingLocation]; // Inizia a monitorare la posizione dell'utente
 }
 
 - (IBAction)showMapButton:(id)sender {
@@ -34,9 +35,6 @@
 - (IBAction)saveButton:(id)sender {
     NSString *name = self.nameTextField.text;
     NSString *address = self.addressTextField.text;
-    NSString *poiDescription = self.descriptionTextField.text;
-    NSDate *timestamp = [NSDate date];
-    
     // Verifica se nome e indirizzo sono vuoti
     if (name.length == 0 || address.length == 0) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
@@ -50,12 +48,17 @@
         [self presentViewController:alert animated:YES completion:nil];
         return; // Esce dalla funzione senza salvare il Poi
         }
+    
+    NSString *poiDescription = self.descriptionTextField.text;
+    NSDate *timestamp = [NSDate date];
+    
+    
     // Creazione del Poi con gli elementi inseriti
     Poi *newPoi = [[Poi alloc] initWithName:name
                                      address:address
                                  description:poiDescription
                                    timestamp:timestamp];
-       
+    // aggiungo il Poi alla lista condivisa
     PoiManager *poiManager = [PoiManager sharedManager];
     [poiManager savePoi:newPoi];
     
@@ -65,13 +68,13 @@
     self.descriptionTextField.text = @"";
 }
 
+// Navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"segueShowMap"]) {
         [self performSegueWithIdentifier:@"segueShowMap" sender:self];
     } else if ([segue.identifier isEqualToString:@"segueShowList"]) {
         [self performSegueWithIdentifier:@"segueShowList" sender:self];
     }
-    
 }
 
 @end
