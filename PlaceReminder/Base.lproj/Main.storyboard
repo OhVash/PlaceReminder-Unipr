@@ -87,7 +87,7 @@
                         <barButtonItem key="leftBarButtonItem" title="List" id="mO4-eh-ey9">
                             <connections>
                                 <action selector="showListButton:" destination="BYZ-38-t0r" id="VOJ-p2-gYA"/>
-                                <segue destination="F7v-lK-uMa" kind="show" id="zXg-kK-mPt"/>
+                                <segue destination="F7v-lK-uMa" kind="show" id="Dg6-zh-VlI"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="map" catalog="system" id="eT9-nX-tw7">

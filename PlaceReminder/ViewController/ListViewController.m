@@ -20,8 +20,9 @@
     [super viewDidLoad];
     [self setupNotification];
     self.title=@"Your Saved Locations";
-    
+    // implementa metodi di UITableView
     self.tableView.dataSource = self;
+    // gestisce eventi all'interno della lista
     self.tableView.delegate = self;
     
     // Register the cell class or nib with the appropriate identifier
@@ -40,9 +41,10 @@
     }
 }
 
-#pragma mark - UITableView
+#pragma mark - UITableViewDelegate
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView
+                 cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     
        Poi *poi = PoiManager.sharedManager.getAllPoi[indexPath.row];
@@ -50,11 +52,13 @@
        return cell;
 }
 
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(nonnull UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section {
     return PoiManager.sharedManager.poiList.count;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     Poi *selectedPoi = PoiManager.sharedManager.getAllPoi[indexPath.row];
        
