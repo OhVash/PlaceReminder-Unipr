@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) Poi *selectedPoi;
 @property (nonatomic, assign) NSUInteger poiIndex;
 
+- (void)setupDetails;
+
 @end
 
 NS_ASSUME_NONNULL_END

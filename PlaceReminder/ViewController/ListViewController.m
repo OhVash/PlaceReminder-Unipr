@@ -10,7 +10,7 @@
 @interface ListViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) Poi *selectedPoi;
+
 
 @end
 
@@ -78,7 +78,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                                object:nil];
 }
 
-- (void)updateData {
+-(void) updateData {
     [self.tableView reloadData];
 }
 
