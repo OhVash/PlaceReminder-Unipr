@@ -41,7 +41,7 @@
     }
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - UITableViewDataSource
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView
                  cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
@@ -56,6 +56,7 @@
  numberOfRowsInSection:(NSInteger)section {
     return PoiManager.sharedManager.poiList.count;
 }
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

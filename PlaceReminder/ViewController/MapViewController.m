@@ -37,7 +37,7 @@
     // Aggiungo i Poi salvati alla mappa
     for (Poi *poi in PoiManager.sharedManager.poiList) {
         [self addPoiToMap:poi];
-        [self startMonitoringGeofenceForPoi:poi];
+       // [self startMonitoringGeofenceForPoi:poi];
     } 
 }
 
@@ -63,7 +63,7 @@
         }
     }];
 }
-
+/*
 - (void)startMonitoringGeofenceForPoi:(Poi *)poi {
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:poi.address
@@ -84,7 +84,7 @@
             [self.locationManager startMonitoringForRegion:region];
         }
     }];
-}
+} */
 
 #pragma mark - MKMapViewDelegate
 
@@ -136,7 +136,7 @@ didSelectAnnotationView:(MKAnnotationView *)view {
 }
 
 #pragma mark - CLLocationManagerDelegate
-
+/*
 - (void)locationManager:(CLLocationManager *)manager
          didEnterRegion:(CLRegion *)region {
     if ([region isKindOfClass:[CLCircularRegion class]]) {
@@ -151,7 +151,7 @@ didSelectAnnotationView:(MKAnnotationView *)view {
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:circularRegion.identifier content:content trigger:nil];
         [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
     }
-}
+} */
 
 @end
 

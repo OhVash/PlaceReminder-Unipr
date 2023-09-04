@@ -21,6 +21,10 @@
     [super viewDidLoad];
     self.locationManager = [[CLLocationManager alloc] init];
     [self.locationManager requestWhenInUseAuthorization]; // richiesta localizzazione
+    // Richiesta autorizzazione alle notifiche
+    UNUserNotificationCenter *nc = [UNUserNotificationCenter currentNotificationCenter];
+    [nc requestAuthorizationWithOptions:(UNAuthorizationOptionAlert + UNAuthorizationOptionSound)
+                        completionHandler:^(BOOL granted, NSError * _Nullable error){}];
     [self.locationManager startUpdatingLocation]; // Inizia a monitorare la posizione dell'utente
 }
 
